@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "isdfbenchmarks"
+version = "0.0.1"
+authors = [{name = "Alex Buccheri"}]
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+    "jupyter>=1.0.0",
+    "numpy>=1.26.1",
+    "matplotlib"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[project.optional-dependencies]
+dev = [
+  "ruff>=0.1.8",
+  "pytest>=7.2.0",
+  "pytest-cov>=4.0.0",
+  "sphinx>=7.2.6",
+  "sphinx-rtd-theme==2.0.0",
+  "tox>=4.11.4"
+]
+
+# Ruff config
+[tool.ruff]
+target-version = "py39"
+
+[tool.ruff.lint]
+ignore = ["E501",  # line too long
+  "E731"           # I like to name lambdas
+]
+
+# coverage config
+[tool.coverage.paths]
+source = ["isdfbenchmarks"]
+
+[tool.coverage.run]
+branch = true
+relative_files = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+
+
+# pytest config - new in v6.0
+# Instead of specifying pytest.ini
+# See: https://docs.pytest.org/en/7.1.x/reference/customize.html
+[tool.pytest.ini_options]
+minversion = "7.2.0"
+addopts = "-v --doctest-modules"
+testpaths = [
+    "tests",
+]
