@@ -13,12 +13,14 @@ def parse_scf_time(string: str) -> dict:
     return scf_times
 
 
-def parse_exchange_energy():
+def parse_exchange_energy(string: str) -> dict:
     """ Parse the exchange energy per SCF iteration
-    NOTE, I need to add this to the code
+    NOTE, ONLY works if I add a print statement to v_ks.F90
     :return:
     """
-    pass
+    pattern = re.compile(r'Exact exchange energy\s+([-+]?(?:\d*\.\d+|\d+)(?:[eE][-+]?\d+)?)')
+    matches = pattern.findall(string)
+    return {int(i): float(energy) for i, energy in enumerate(matches)}
 
 
 def parse_kmeans_iterations(string: str) -> dict:
