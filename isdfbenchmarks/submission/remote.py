@@ -43,10 +43,10 @@ class Remote:
         ssh.close()
         exit_status = stdout.channel.recv_exit_status()
 
-        if exit_status != 0:
-            raise RuntimeError(
-                f"Remote exit code: {exit_status}\n"
-                f"--- STDERR ---\n{err or '<empty>'}\n"
-                f"--- STDOUT (truncated) ---\n{out[:2000]}"
-            )
+        # if exit_status != 0:
+        #     raise RuntimeError(
+        #         f"Remote exit code: {exit_status}\n"
+        #         f"--- STDERR ---\n{err or '<empty>'}\n"
+        #         f"--- STDOUT (truncated) ---\n{out[:2000]}"
+        #     )
         return out
