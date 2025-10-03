@@ -66,14 +66,17 @@ def kmeans_calcs(root: Path, executable: str):
 
 if __name__ == '__main__':
     # Reference
-    kmeans_calcs(Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeans_ref'),
-                 "/home/bucchera/programs/octopus/cmake-build-foss-full-mpi-release/octopus")
+    # kmeans_calcs(Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeans_ref'),
+    #              "/home/bucchera/programs/octopus/cmake-build-foss-full-mpi-release/octopus")
+
     # L2 Norm
     # kmeans_calcs(Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeans_l2'),
     #              "/home/bucchera/programs/octopus/l2_norm/octopus")
 
     # L2 norm + Lin Lin criterion
-    # TODO Code it and build the binary
+    # kmeans_calcs(Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeans_l2_and_preassign'),
+    #              "/home/bucchera/programs/octopus/l2_norm_preassign/octopus")
 
     # L2 norm + inertia
-    # TODO Code it and build the binary
+    # kmeans_calcs(Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeans_l2_and_inertia'),
+    #              "/home/bucchera/programs/octopus/l2_norm_inertia/octopus")
