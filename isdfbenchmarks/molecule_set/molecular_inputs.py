@@ -81,6 +81,7 @@ def reference_inputs() -> dict:
                   "Radius": "6.0 * angstrom",
                   "Spacing": "0.16 * angstrom",
                   "XYZCoordinates": "'structure.xyz'",
+                  "PseudoPotentialSet": "pseudodojo_pbe", # Required for Mg
                   "XCFunctional": "hyb_gga_xc_b3lyp",
                   "Eigensolver": "chebyshev_filter",
                   "ExtraStates": "12",
