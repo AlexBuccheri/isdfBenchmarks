@@ -5,15 +5,14 @@ source programs/isdfBenchmarks/.venv/bin/activate
 python ~/programs/isdfBenchmarks/scripts/submit.py
 
 Specify ROOT
-DRY = True by default
 """
 import os
 import subprocess
 import re
 import sys
 
-ROOT = "/home/bucchera/exchange_calcs/kmeans_l2"
-DRY = True
+ROOT = "/home/bucchera/exchange_calcs/kmeans_plus_plus"
+DRY = False
 
 JOBID_RE = re.compile(r"Submitted batch job (\d+)")
 
@@ -29,7 +28,7 @@ def main():
         print(f"No 'slurm.sh' found under {root}")
         return 1
 
-    print(f"Found {len(job_dirs)} dirs with slurm.sh.\n")
+    print(f"Found {len(job_dirs)} dirs with slurm.sh in\n {ROOT}\n")
 
     submitted, errors = [], 0
 
