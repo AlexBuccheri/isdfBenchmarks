@@ -124,16 +124,29 @@ def isdf_varying_isdf_number(root: Path, molecules: list, slurm_base_settings: d
 
 if __name__ == '__main__':
 
+    # molecules = ['anthracene', 'tetracene', 'pentacene', 'ether_crown']
+    #
+    # slurm_base_settings = {'executable': "/home/bucchera/programs/octopus/cmake-build-foss-full-mpi-release/octopus",
+    #                        'nodes': 1,
+    #                        'ntasks_per_node': 4,
+    #                        'cpus_per_task': 8,
+    #                        'pre_script': module_25b}
+    #
+    # ref_root = Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/ace_references')
+    # isdf_root = Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/nisdf_vector_scaling')
+    #
+    # isdf_varying_isdf_number(isdf_root, molecules, slurm_base_settings)
+    # ref_ace(ref_root, molecules, slurm_base_settings)
+
+
+    # Pointing to binary that should be using k-means++ as centroid seeding
     molecules = ['anthracene', 'tetracene', 'pentacene', 'ether_crown']
 
-    slurm_base_settings = {'executable': "/home/bucchera/programs/octopus/cmake-build-foss-full-mpi-release/octopus",
+    slurm_base_settings = {'executable': "/home/bucchera/programs/octopus/l2_norm/octopus",
                            'nodes': 1,
                            'ntasks_per_node': 4,
                            'cpus_per_task': 8,
                            'pre_script': module_25b}
 
-    ref_root = Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/ace_references')
-    isdf_root = Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/nisdf_vector_scaling')
-
+    isdf_root = Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeanspp_nisdf_vector_scaling')
     isdf_varying_isdf_number(isdf_root, molecules, slurm_base_settings)
-    ref_ace(ref_root, molecules, slurm_base_settings)

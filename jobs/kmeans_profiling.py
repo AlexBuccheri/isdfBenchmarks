@@ -1,4 +1,5 @@
 """ Generate ISDF Inputs for KMeans Profiling
+From the project root:  python jobs/kmeans_profiling.py
 """
 from pathlib import Path
 
@@ -56,6 +57,7 @@ def kmeans_calcs(root: Path, executable: str):
     :return:
     """
     molecules = ['anthracene', 'tetracene', 'pentacene', 'ether_crown', 'buckminster', 'chlorophyll']
+    # Fixed for consistent benchmarking
     slurm_base_settings = {'nodes': 1,
                            'ntasks_per_node': 4,
                            'cpus_per_task': 8,
@@ -72,6 +74,10 @@ if __name__ == '__main__':
     # L2 Norm
     # kmeans_calcs(Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeans_l2'),
     #              "/home/bucchera/programs/octopus/l2_norm/octopus")
+
+    # L2 norm + initial centroids with k-means++
+    kmeans_calcs(Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeans_plus_plus'),
+                 "/home/bucchera/programs/octopus/l2_norm/octopus")
 
     # L2 norm + Lin Lin criterion
     # kmeans_calcs(Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeans_l2_and_preassign'),
