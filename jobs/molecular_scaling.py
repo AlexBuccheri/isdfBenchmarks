@@ -23,7 +23,7 @@ from pathlib import Path
 
 from isdfbenchmarks.molecule_set.molecular_inputs import reference_inputs, isdf_base_inputs
 from isdfbenchmarks.molecule_set.molecular_xyz import molecular_xyz_str
-from isdfbenchmarks.submission.slurm import SlurmConfig, module_25b
+from isdfbenchmarks.submission.slurm import SlurmConfig, module_25c
 from isdfbenchmarks.parser.inp_gen import basic_dict_to_inp
 
 
@@ -63,7 +63,7 @@ def ref_ace(root: Path, molecules, slurm_base_settings):
             fid.write(str(cfg))
 
 
-def isdf_varying_isdf_number(root: Path, molecules: list, slurm_base_settings: dict):
+def isdf_varying_isdf_number(root: Path, molecules: list, slurm_base_settings: dict, inp_options=None):
     """
     Vary ISDF number from 5 * Nocc to 15 * Nocc
     such that one can plot scaling w.r.t. reference,
@@ -92,6 +92,9 @@ def isdf_varying_isdf_number(root: Path, molecules: list, slurm_base_settings: d
     """
     isdf_inputs = isdf_base_inputs()
 
+    if inp_options is None:
+        inp_options = {}
+
     print("Generating data in:")
     multipliers = [5, 7.5, 10, 15]
     for m in multipliers:
@@ -104,8 +107,7 @@ def isdf_varying_isdf_number(root: Path, molecules: list, slurm_base_settings: d
 
             # Input file
             n_isdf = int(m * occupations[molecule])
-            opts = {"ISDFNpoints": str(n_isdf),
-                    "KMeansRepeatInterval": "0"}
+            opts = {"ISDFNpoints": str(n_isdf)} | inp_options
             inp_dict = isdf_inputs[molecule] | opts
             inpr_str = basic_dict_to_inp(inp_dict)
             with open(file=subdirectory / "inp", mode='w') as fid:
@@ -139,14 +141,21 @@ if __name__ == '__main__':
     # ref_ace(ref_root, molecules, slurm_base_settings)
 
 
-    # Pointing to binary that should be using k-means++ as centroid seeding
     molecules = ['anthracene', 'tetracene', 'pentacene', 'ether_crown']
 
-    slurm_base_settings = {'executable': "/home/bucchera/programs/octopus/l2_norm/octopus",
+    slurm_base_settings = {'executable': "/home/bucchera/programs/octopus/install_release_l2_norm_clean/bin/octopus",
                            'nodes': 1,
                            'ntasks_per_node': 4,
                            'cpus_per_task': 8,
-                           'pre_script': module_25b}
+                           'pre_script': module_25c}
 
-    isdf_root = Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeanspp_nisdf_vector_scaling')
-    isdf_varying_isdf_number(isdf_root, molecules, slurm_base_settings)
+    # FY
+    isdf_root = Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/fy_all_itrs')
+    inp_options = {"KMeansRepeatInterval": "1", "KMeansSeeding": "FisherYates"}
+    isdf_varying_isdf_number(isdf_root, molecules, slurm_base_settings, inp_options=inp_options)
+
+
+    # kmeans++
+    isdf_root = Path('/Users/alexanderbuccheri/Codes/isdfBenchmarks/outputs/kmeanspp_all_itrs')
+    inp_options = {"KMeansRepeatInterval": "1", "KMeansSeeding": "KMeanspp"}
+    isdf_varying_isdf_number(isdf_root, molecules, slurm_base_settings, inp_options=inp_options)
