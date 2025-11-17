@@ -44,28 +44,31 @@ def parse_time(file):
         line = stars.sub('-10', line)
 
         entry = line.split()
+        name = entry[0]
 
         # If there are not the correct number of line breaks, that means
-        # one number was large enough to crash into the preceeding line,
-        # but not so large it turned to stars. Just skip the whole line for now
+        # one number was large enough to crash into the preceding line,
+        # but not so large it turned to stars (still an issue with MFLOPS).
         if len(entry) < 14:
-            # corrupt_lines.append(entry[0])
-            continue
-
-        name = entry[0]
-        cumulative_times[name] = {'NUM_CALLS': int(entry[1]),
-                                  'TOTAL_TIME': float(entry[2]),
-                                  'TIME_PER_CALL': float(entry[3]),
-                                  'MIN_TIME': float(entry[4]),
-                                  'MFLOPS': float(entry[5]),
-                                  'MBYTES/S': float(entry[6]),
-                                  'TIME(%)': float(entry[7])
-                                  }
-        self_times[name] = {'TOTAL_TIME': float(entry[9]),
-                            'TIME_PER_CALL': float(entry[10]),
-                            'MFLOPS': float(entry[11]),
-                            'MBYTES/S': float(entry[12]),
-                            'TIME(%)': float(entry[13])
+            # Extract the viable data from cumulative time and zero the rest
+            cumulative_times[name] = {'NUM_CALLS': int(entry[1]),
+                                      'TOTAL_TIME': float(entry[2]),
+                                      'TIME_PER_CALL': float(entry[3])
+                                      }
+        else:
+            cumulative_times[name] = {'NUM_CALLS': int(entry[1]),
+                                      'TOTAL_TIME': float(entry[2]),
+                                      'TIME_PER_CALL': float(entry[3]),
+                                      'MIN_TIME': float(entry[4]),
+                                      'MFLOPS': float(entry[5]),
+                                      'MBYTES/S': float(entry[6]),
+                                      'TIME(%)': float(entry[7])
+                                      }
+            self_times[name] = {'TOTAL_TIME': float(entry[9]),
+                                'TIME_PER_CALL': float(entry[10]),
+                                'MFLOPS': float(entry[11]),
+                                'MBYTES/S': float(entry[12]),
+                                'TIME(%)': float(entry[13])
                             }
 
     return cumulative_times, self_times
