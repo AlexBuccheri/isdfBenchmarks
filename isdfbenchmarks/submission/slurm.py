@@ -6,8 +6,8 @@ from dataclasses import dataclass, field, fields
 from typing import List
 
 
-module_25b = """module purge
-mpsd-modules 25b
+module_25c = """module purge
+mpsd-modules 25c
 module load gcc/13.2.0 openmpi/4.1.6 octopus-dependencies/full
 unset CPATH 
 unset LIBRARY_PATH
@@ -23,7 +23,7 @@ class SlurmConfig:
     ntasks_per_node: int = field(default=4, metadata={"kw": "ntasks-per-node"})
     cpus_per_task: int = field(default=8, metadata={"kw": "cpus-per-task"})
     exclusive: bool = field(default=True, metadata={"kw": "exclusive", "flag": True})  # flag = no RHS
-    pre_script: str = field(default=module_25b)
+    pre_script: str = field(default=module_25c)
     stdout: str = field(default="terminal.out")
 
     def to_sbatch_directives(self) -> List[str]:
